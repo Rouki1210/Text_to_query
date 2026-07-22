@@ -1,0 +1,278 @@
+[
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "question": "How many crypto assets are tracked in total?",
+    "gold_sql": "SELECT count(*) AS assets FROM \"Assets\""
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "question": "Which 5 assets have the highest view count? Show the symbol and the count.",
+    "gold_sql": "SELECT \"Symbol\", \"ViewCount\" FROM \"Assets\" ORDER BY \"ViewCount\" DESC LIMIT 5"
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "question": "How many assets belong to each network?",
+    "gold_sql": "SELECT \"Network\", count(*) AS assets FROM \"Assets\" GROUP BY \"Network\""
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "question": "How many price points have been recorded in total?",
+    "gold_sql": "SELECT count(*) AS price_points FROM \"PricePoints\""
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "question": "What is the earliest and latest timestamp in the price history?",
+    "gold_sql": "SELECT min(\"TimestampUtc\") AS earliest, max(\"TimestampUtc\") AS latest FROM \"PricePoints\""
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "question": "What is the average closing price of Bitcoin across its whole price history?",
+    "gold_sql": "SELECT avg(p.\"Close\") AS avg_close FROM \"PricePoints\" p JOIN \"Assets\" a ON a.\"Id\" = p.\"AssetId\" WHERE a.\"Symbol\" = 'BTC'"
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "question": "How many price points were recorded in November 2025?",
+    "gold_sql": "SELECT count(*) AS price_points FROM \"PricePoints\" WHERE \"TimestampUtc\" >= '2025-11-01' AND \"TimestampUtc\" < '2025-12-01'"
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "question": "Which asset currently has the highest cached price? Show the symbol and the price.",
+    "gold_sql": "SELECT a.\"Symbol\", c.\"CurrentPrice\" FROM \"PriceCaches\" c JOIN \"Assets\" a ON a.\"Id\" = c.\"AssetId\" ORDER BY c.\"CurrentPrice\" DESC LIMIT 1"
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "question": "How many assets have a cached current price above 1000?",
+    "gold_sql": "SELECT count(*) AS assets FROM \"PriceCaches\" WHERE \"CurrentPrice\" > 1000"
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "question": "How many global market snapshots do we have?",
+    "gold_sql": "SELECT count(*) AS snapshots FROM \"GlobalMetric\""
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "question": "What is the most recent Bitcoin dominance percentage recorded?",
+    "gold_sql": "SELECT \"Bitcoin_dominance_percentage\" FROM \"GlobalMetric\" ORDER BY \"TimestampUtc\" DESC LIMIT 1"
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "question": "How many global market snapshots were taken in each month?",
+    "gold_sql": "SELECT date_trunc('month', \"TimestampUtc\") AS month, count(*) AS snapshots FROM \"GlobalMetric\" GROUP BY 1"
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "question": "What is the highest altcoin season score ever recorded?",
+    "gold_sql": "SELECT max(\"Altcoin_season_score\") AS max_score FROM \"GlobalMetric\""
+  },
+  {
+    "sprint": 1,
+    "unit": "users",
+    "question": "How many users are registered on the platform?",
+    "gold_sql": "SELECT count(*) AS users FROM \"Users\""
+  },
+  {
+    "sprint": 1,
+    "unit": "users",
+    "question": "How many users signed up with each authentication provider?",
+    "gold_sql": "SELECT \"AuthProvider\", count(*) AS users FROM \"Users\" GROUP BY \"AuthProvider\""
+  },
+  {
+    "sprint": 1,
+    "unit": "users",
+    "question": "Break down the users by verification status.",
+    "gold_sql": "SELECT \"IsVerified\", count(*) AS users FROM \"Users\" GROUP BY \"IsVerified\""
+  },
+  {
+    "sprint": 1,
+    "unit": "users",
+    "question": "How many new users registered in each month?",
+    "gold_sql": "SELECT date_trunc('month', \"CreatedAt\") AS month, count(*) AS users FROM \"Users\" GROUP BY 1"
+  },
+  {
+    "sprint": 1,
+    "unit": "users",
+    "question": "List all the roles defined in the system with their id and name.",
+    "gold_sql": "SELECT \"Id\", \"Name\" FROM \"Roles\" ORDER BY \"Id\""
+  },
+  {
+    "sprint": 1,
+    "unit": "users",
+    "question": "How many users are assigned to each role name?",
+    "gold_sql": "SELECT r.\"Name\", count(*) AS users FROM \"UserRoles\" ur JOIN \"Roles\" r ON r.\"Id\" = ur.\"RoleId\" GROUP BY r.\"Name\""
+  },
+  {
+    "sprint": 1,
+    "unit": "alerts",
+    "question": "How many price alerts have users created in total?",
+    "gold_sql": "SELECT count(*) AS alerts FROM \"UserAlerts\""
+  },
+  {
+    "sprint": 1,
+    "unit": "alerts",
+    "question": "How many user alerts are there of each alert type?",
+    "gold_sql": "SELECT \"AlertType\", count(*) AS alerts FROM \"UserAlerts\" GROUP BY \"AlertType\""
+  },
+  {
+    "sprint": 1,
+    "unit": "alerts",
+    "question": "How many user alerts are currently active versus inactive?",
+    "gold_sql": "SELECT \"IsActive\", count(*) AS alerts FROM \"UserAlerts\" GROUP BY \"IsActive\""
+  },
+  {
+    "sprint": 1,
+    "unit": "alerts",
+    "question": "Which users have created the most price alerts? Show the top 5 user ids and their alert counts.",
+    "gold_sql": "SELECT \"UserId\", count(*) AS alerts FROM \"UserAlerts\" GROUP BY \"UserId\" ORDER BY alerts DESC, \"UserId\" LIMIT 5"
+  },
+  {
+    "sprint": 1,
+    "unit": "alerts",
+    "question": "How many alert history entries have been recorded?",
+    "gold_sql": "SELECT count(*) AS history_entries FROM \"UserAlertHistories\""
+  },
+  {
+    "sprint": 1,
+    "unit": "alerts",
+    "question": "How many alerts are repeating versus one-shot?",
+    "gold_sql": "SELECT \"IsRepeating\", count(*) AS alerts FROM \"UserAlerts\" GROUP BY \"IsRepeating\""
+  },
+  {
+    "sprint": 1,
+    "unit": "watchlists",
+    "question": "How many watchlists have users created?",
+    "gold_sql": "SELECT count(*) AS watchlists FROM \"Watchlists\""
+  },
+  {
+    "sprint": 1,
+    "unit": "watchlists",
+    "question": "How many items does each watchlist contain?",
+    "gold_sql": "SELECT \"WatchlistId\", count(*) AS items FROM \"WatchlistItems\" GROUP BY \"WatchlistId\""
+  },
+  {
+    "sprint": 2,
+    "unit": "cross",
+    "question": "Which asset symbols appear in users' watchlists, and how many times does each appear?",
+    "gold_sql": "SELECT a.\"Symbol\", count(*) AS times FROM \"WatchlistItems\" wi JOIN \"Assets\" a ON a.\"Id\" = wi.\"AssetId\" GROUP BY a.\"Symbol\""
+  },
+  {
+    "sprint": 2,
+    "unit": "cross",
+    "question": "For each username, how many watchlists do they own?",
+    "gold_sql": "SELECT u.\"Username\", count(*) AS watchlists FROM \"Watchlists\" w JOIN \"Users\" u ON u.\"Id\" = w.\"UserId\" GROUP BY u.\"Username\""
+  },
+  {
+    "sprint": 2,
+    "unit": "cross",
+    "question": "How many price alerts exist for each asset symbol, using the asset table for the symbol?",
+    "gold_sql": "SELECT a.\"Symbol\", count(*) AS alerts FROM \"UserAlerts\" ua JOIN \"Assets\" a ON a.\"Id\" = ua.\"AssetId\" GROUP BY a.\"Symbol\""
+  },
+
+  {
+    "sprint": 1,
+    "unit": "users",
+    "tags": ["hard", "vietnamese"],
+    "question": "Có bao nhiêu người dùng đăng ký bằng tài khoản Google?",
+    "gold_sql": "SELECT count(*) AS so_luong FROM \"Users\" WHERE \"AuthProvider\" = 'Google'"
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "tags": ["hard", "vietnamese"],
+    "question": "Mỗi mạng lưới có bao nhiêu tài sản?",
+    "gold_sql": "SELECT \"Network\", count(*) AS so_tai_san FROM \"Assets\" GROUP BY \"Network\""
+  },
+  {
+    "sprint": 1,
+    "unit": "alerts",
+    "tags": ["hard", "vietnamese"],
+    "question": "Có bao nhiêu cảnh báo giá đang được bật?",
+    "gold_sql": "SELECT count(*) AS dang_bat FROM \"UserAlerts\" WHERE \"IsActive\" = true"
+  },
+  {
+    "sprint": 1,
+    "unit": "watchlists",
+    "tags": ["hard", "vietnamese"],
+    "question": "Danh sách theo dõi nào chứa nhiều tài sản nhất? Cho biết id và số lượng.",
+    "gold_sql": "SELECT \"WatchlistId\", count(*) AS so_tai_san FROM \"WatchlistItems\" GROUP BY \"WatchlistId\" ORDER BY so_tai_san DESC, \"WatchlistId\" LIMIT 1"
+  },
+
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "tags": ["hard", "type-trap"],
+    "question": "Which are the top 10 assets by market ranking? Show symbol and rank.",
+    "gold_sql": "SELECT \"Symbol\", \"Rank\" FROM \"Assets\" WHERE \"Rank\" ~ '^[0-9]+$' ORDER BY \"Rank\"::int LIMIT 10"
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "tags": ["hard", "type-trap"],
+    "question": "What is the highest fear and greed index value ever recorded?",
+    "gold_sql": "SELECT max(\"fear_and_greed_index\"::int) AS max_index FROM \"GlobalMetric\" WHERE \"fear_and_greed_index\" ~ '^[0-9]+$'"
+  },
+
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "tags": ["hard", "ambiguous"],
+    "question": "What is the current price of Bitcoin?",
+    "gold_sql": "SELECT c.\"CurrentPrice\" FROM \"PriceCaches\" c JOIN \"Assets\" a ON a.\"Id\" = c.\"AssetId\" WHERE a.\"Symbol\" = 'BTC'"
+  },
+  {
+    "sprint": 1,
+    "unit": "watchlists",
+    "tags": ["hard", "ambiguous"],
+    "question": "How many distinct users own at least one watchlist?",
+    "gold_sql": "SELECT count(DISTINCT \"UserId\") AS owners FROM \"Watchlists\""
+  },
+
+  {
+    "sprint": 2,
+    "unit": "cross",
+    "tags": ["hard", "vocabulary"],
+    "question": "Which coins are most popular among our users? Show the symbol and how many watchlists each appears in.",
+    "gold_sql": "SELECT a.\"Symbol\", count(*) AS popularity FROM \"WatchlistItems\" wi JOIN \"Assets\" a ON a.\"Id\" = wi.\"AssetId\" GROUP BY a.\"Symbol\" ORDER BY popularity DESC, a.\"Symbol\""
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "tags": ["hard", "date"],
+    "question": "How many price points were recorded during the final seven days of available price history?",
+    "gold_sql": "SELECT count(*) AS price_points FROM \"PricePoints\" WHERE \"TimestampUtc\" >= (SELECT max(\"TimestampUtc\") - interval '7 days' FROM \"PricePoints\")"
+  },
+
+  {
+    "sprint": 1,
+    "unit": "alerts",
+    "tags": ["hard", "enum-value"],
+    "question": "How many alerts are set to fire when the price rises above a target?",
+    "gold_sql": "SELECT count(*) AS alerts FROM \"UserAlerts\" WHERE \"AlertType\" = 'ABOVE'"
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "tags": ["hard", "enum-value"],
+    "question": "How many assets run on Binance Smart Chain?",
+    "gold_sql": "SELECT count(*) AS assets FROM \"Assets\" WHERE \"Network\" = 'BSC'"
+  },
+  {
+    "sprint": 1,
+    "unit": "market_data",
+    "tags": ["hard", "enum-value"],
+    "question": "On how many snapshots was market sentiment at its most fearful level?",
+    "gold_sql": "SELECT count(*) AS snapshots FROM \"GlobalMetric\" WHERE \"fear_and_greed_text\" = 'Extreme fear'"
+  }
+]

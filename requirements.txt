@@ -1,0 +1,20 @@
+# Runtime dependencies for fsq-agent.
+#
+# pyproject.toml is the source of truth — this file mirrors its [project]
+# dependencies for tooling that expects a requirements.txt. If you add a
+# dependency, add it in BOTH places or use `pip install -e .` instead.
+#
+#   pip install -r requirements.txt
+#   pip install -r requirements-dev.txt   # runtime + test/lint tools
+
+anthropic>=0.40           # LLM provider (swappable via core/llm.py)
+sqlalchemy>=2.0           # DB-agnostic connection layer
+duckdb>=1.0               # local mock feature store for dev
+duckdb-engine>=0.13       # SQLAlchemy dialect for DuckDB
+pandas>=2.2               # result handling + stats for the reporter
+pydantic-settings>=2.4    # typed config from .env
+pyyaml>=6.0               # semantic layer definitions
+streamlit>=1.38           # chat UI (Sprint 2)
+plotly>=5.24              # simple visualizations in the UI
+apscheduler>=3.10         # nightly job scheduling (Sprint 3)
+requests>=2.32            # Slack webhook publisher

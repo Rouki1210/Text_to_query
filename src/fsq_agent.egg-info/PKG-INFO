@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: fsq-agent
+Version: 0.1.0
+Summary: Feature Store Query & Reporting Agent — text-to-SQL analyst + proactive nightly reporter
+Requires-Python: >=3.11
+Requires-Dist: anthropic>=0.40
+Requires-Dist: sqlalchemy>=2.0
+Requires-Dist: duckdb>=1.0
+Requires-Dist: duckdb-engine>=0.13
+Requires-Dist: pandas>=2.2
+Requires-Dist: pydantic-settings>=2.4
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: streamlit>=1.38
+Requires-Dist: plotly>=5.24
+Requires-Dist: apscheduler>=3.10
+Requires-Dist: requests>=2.32
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Requires-Dist: ruff>=0.6; extra == "dev"
+Requires-Dist: faker>=28.0; extra == "dev"

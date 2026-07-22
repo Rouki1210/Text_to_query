@@ -1,0 +1,16 @@
+anthropic>=0.40
+sqlalchemy>=2.0
+duckdb>=1.0
+duckdb-engine>=0.13
+pandas>=2.2
+pydantic-settings>=2.4
+pyyaml>=6.0
+streamlit>=1.38
+plotly>=5.24
+apscheduler>=3.10
+requests>=2.32
+
+[dev]
+pytest>=8.0
+ruff>=0.6
+faker>=28.0

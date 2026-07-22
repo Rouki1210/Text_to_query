@@ -1,0 +1,39 @@
+[project]
+name = "fsq-agent"
+version = "0.1.0"
+description = "Feature Store Query & Reporting Agent — text-to-SQL analyst + proactive nightly reporter"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.40",          # LLM provider (swappable via core/llm.py)
+    "sqlalchemy>=2.0",          # DB-agnostic connection layer
+    "duckdb>=1.0",              # local mock feature store for dev
+    "duckdb-engine>=0.13",      # SQLAlchemy dialect for DuckDB
+    "pandas>=2.2",              # result handling + stats for the reporter
+    "pydantic-settings>=2.4",   # typed config from .env
+    "pyyaml>=6.0",              # semantic layer definitions
+    "streamlit>=1.38",          # chat UI (Sprint 2)
+    "plotly>=5.24",             # simple visualizations in the UI
+    "apscheduler>=3.10",        # nightly job scheduling (Sprint 3)
+    "requests>=2.32",           # Slack webhook publisher
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+    "faker>=28.0",              # mock data generation
+]
+
+[tool.ruff]
+line-length = 100
+src = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
